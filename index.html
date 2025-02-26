@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casal Pizzas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(rgba(67, 40, 110, 0.95), rgba(67, 40, 110, 0.95)),
+                        url('https://images.unsplash.com/photo-1495195134817-aeb325a55b65?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo h1 {
+            font-size: 2.5em;
+            background: linear-gradient(45deg, #ff9f43, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .categorias {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding: 10px 0;
+            margin-bottom: 20px;
+        }
+
+        .categoria-btn {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .categoria-btn.active {
+            background: #8e44ad;
+        }
+
+        .produtos-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .categoria-section {
+            margin-bottom: 30px;
+        }
+
+        .categoria-section h2 {
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 4px solid #8e44ad;
+        }
+
+        .produtos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .produto {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .produto:hover {
+            transform: translateY(-5px);
+        }
+
+        .carrinho {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 25px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        button {
+            background: #8e44ad;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-size: 1em;
+        }
+
+        button:hover {
+            background: #9b59b6;
+            transform: scale(1.02);
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 1em;
+        }
+
+        #itens-carrinho div {
+            padding: 10px;
+            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .remove-btn {
+            background: none;
+            color: #ff6b6b;
+            padding: 5px;
+            margin-left: 10px;
+            width: auto;
+        }
+
+        .remove-btn:hover {
+            background: rgba(255, 107, 107, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .produtos {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="logo">
+        <h1>Casal Pizzas</h1>
+        <p>Entregas em até 45 minutos!</p>
+    </header>
+
+    <div class="categorias">
+        <div class="categoria-btn active" onclick="filtrarCategoria('todos')">Todos</div>
+        <div class="categoria-btn" onclick="filtrarCategoria('pizzas')">Pizzas</div>
+        <div class="categoria-btn" onclick="filtrarCategoria('hamburgueres')">Hambúrgueres</div>
+        <div class="categoria-btn" onclick="filtrarCategoria('pasteis')">Pastéis</div>
+        <div class="categoria-btn" onclick="filtrarCategoria('batatas')">Batatas Fritas</div>
+        <div class="categoria-btn" onclick="filtrarCategoria('bebidas')">Bebidas</div>
+    </div>
+
+    <main class="produtos-container">
+        <section class="categoria-section" data-categoria="pizzas">
+            <h2>Pizzas</h2>
+            <div class="produtos">
+                <article class="produto">
+                    <h3>Pizza Calabresa</h3>
+                    <p>ID: PC01<br>Molho, mussarela e calabresa</p>
+                    <p>Preço: R$ 42,00</p>
+                    <button onclick="addToCart('PC01', 'Pizza Calabresa', 42)">Adicionar</button>
+                </article>
+
+                <article class="produto">
+                    <h3>Pizza Frango Catupiry</h3>
+                    <p>ID: PC02<br>Frango desfiado e catupiry</p>
+                    <p>Preço: R$ 45,00</p>
+                    <button onclick="addToCart('PC02', 'Pizza Frango Catupiry', 45)">Adicionar</button>
+                </article>
+            </div>
+        </section>
+
+        <section class="categoria-section" data-categoria="hamburgueres">
+            <h2>Hambúrgueres</h2>
+            <div class="produtos">
+                <article class="produto">
+                    <h3>Burguer Especial</h3>
+                    <p>ID: BE03<br>200g com bacon e cheddar</p>
+                    <p>Preço: R$ 28,00</p>
+                    <button onclick="addToCart('BE03', 'Burguer Especial', 28)">Adicionar</button>
+                </article>
+            </div>
+        </section>
+
+        <section class="categoria-section" data-categoria="pasteis">
+            <h2>Pastéis</h2>
+            <div class="produtos">
+                <article class="produto">
+                    <h3>Pastel de Carne</h3>
+                    <p>ID: PT04<br>Carne moída temperada</p>
+                    <p>Preço: R$ 12,00</p>
+                    <button onclick="addToCart('PT04', 'Pastel de Carne', 12)">Adicionar</button>
+                </article>
+            </div>
+        </section>
+
+        <section class="categoria-section" data-categoria="batatas">
+            <h2>Batatas Fritas</h2>
+            <div class="produtos">
+                <article class="produto">
+                    <h3>Batata Cheddar</h3>
+                    <p>ID: BT05<br>Com cheddar e bacon</p>
+                    <p>Preço: R$ 20,00</p>
+                    <button onclick="addToCart('BT05', 'Batata Cheddar', 20)">Adicionar</button>
+                </article>
+            </div>
+        </section>
+
+        <section class="categoria-section" data-categoria="bebidas">
+            <h2>Bebidas</h2>
+            <div class="produtos">
+                <article class="produto">
+                    <h3>Refrigerante 2L</h3>
+                    <p>ID: RF06<br>Escolha o sabor</p>
+                    <p>Preço: R$ 15,00</p>
+                    <button onclick="addToCart('RF06', 'Refrigerante 2L', 15)">Adicionar</button>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <section class="carrinho">
+        <h2>Seu Carrinho</h2>
+        <div id="itens-carrinho"></div>
+        <p style="margin: 15px 0; text-align: right;">Total: R$ <span id="total">0,00</span></p>
+    </section>
+
+    <section class="carrinho">
+        <h2>Dados para Entrega</h2>
+        <form id="form-entrega" onsubmit="return false;">
+            <div class="input-group">
+                <label for="nome-completo">Nome Completo:</label>
+                <input type="text" id="nome-completo" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="telefone">WhatsApp:</label>
+                <input type="tel" id="telefone" pattern="[0-9]{11}" placeholder="Ex: 21912345678" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="cep">CEP:</label>
+                <input type="text" id="cep" pattern="[0-9]{8}" placeholder="Ex: 22041001" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="numero">Número da Casa:</label>
+                <input type="text" id="numero" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="pagamento">Forma de Pagamento:</label>
+                <select id="pagamento" required>
+                    <option value="">Selecione...</option>
+                    <option value="Pix">Pix</option>
+                    <option value="Cartão">Cartão</option>
+                    <option value="Dinheiro">Dinheiro</option>
+                </select>
+            </div>
+            
+            <button onclick="finalizarPedido()">Finalizar Pedido</button>
+        </form>
+    </section>
+
+    <script>
+        let carrinho = [];
+
+        function filtrarCategoria(categoria) {
+            document.querySelectorAll('.categoria-section').forEach(section => {
+                if(categoria === 'todos') {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = section.dataset.categoria === categoria ? 'block' : 'none';
+                }
+            });
+
+            document.querySelectorAll('.categoria-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.textContent.toLowerCase() === categoria);
+            });
+        }
+
+        function addToCart(id, nome, preco) {
+            const itemExistente = carrinho.find(item => item.id === id);
+            
+            if(itemExistente) {
+                itemExistente.quantidade++;
+            } else {
+                carrinho.push({id, nome, preco, quantidade: 1});
+            }
+            
+            atualizarCarrinho();
+            showFeedback('Item adicionado ao carrinho!');
+        }
+
+        function atualizarCarrinho() {
+            const container = document.getElementById('itens-carrinho');
+            const total = document.getElementById('total');
+            let html = '';
+            let totalValue = 0;
+
+            carrinho.forEach(item => {
+                html += `
+                    <div>
+                        <span>${item.nome} (${item.id})</span>
+                        <span>
+                            x${item.quantidade}
+                            <button class="remove-btn" onclick="removerItem('${item.id}')">❌</button>
+                        </span>
+                    </div>
+                `;
+                totalValue += item.preco * item.quantidade;
+            });
+
+            container.innerHTML = html;
+            total.textContent = totalValue.toFixed(2).replace('.', ',');
+        }
+
+        function removerItem(id) {
+            carrinho = carrinho.filter(item => item.id !== id);
+            atualizarCarrinho();
+            showFeedback('Item removido do carrinho!');
+        }
+
+        function showFeedback(message) {
+            const feedback = document.createElement('div');
+            feedback.style.position = 'fixed';
+            feedback.style.bottom = '20px';
+            feedback.style.right = '20px';
+            feedback.style.backgroundColor = '#8e44ad';
+            feedback.style.color = 'white';
+            feedback.style.padding = '15px 25px';
+            feedback.style.borderRadius = '8px';
+            feedback.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+            feedback.textContent = message;
+
+            document.body.appendChild(feedback);
+            setTimeout(() => feedback.remove(), 2000);
+        }
+
+        function validarCampos() {
+            const campos = ['nome-completo', 'telefone', 'cep', 'numero', 'pagamento'];
+            for(let campo of campos) {
+                const element = document.getElementById(campo);
+                if(!element.value) {
+                    showFeedback(`Preencha o campo: ${element.labels[0].textContent}`);
+                    element.focus();
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function finalizarPedido() {
+            if(carrinho.length === 0) {
+                showFeedback('Seu carrinho está vazio!');
+                return;
+            }
+
+            if(!validarCampos()) return;
+
+            const dados = {
+                nomeCompleto: document.getElementById('nome-completo').value,
+                telefone: document.getElementById('telefone').value,
+                cep: document.getElementById('cep').value,
+                numero: document.getElementById('numero').value,
+                pagamento: document.getElementById('pagamento').value
+            };
+
+            let mensagem = `*PEDIDO - CASAL PIZZAS*%0A%0A`;
+            mensagem += `*DADOS DO CLIENTE*%0A`;
+            mensagem += `Nome: ${dados.nomeCompleto}%0A`;
+            mensagem += `Contato: ${dados.telefone}%0A`;
+            mensagem += `Endereço: CEP ${dados.cep} - Nº ${dados.numero}%0A%0A`;
+            mensagem += `*FORMA DE PAGAMENTO*%0A`;
+            mensagem += `${dados.pagamento}%0A%0A`;
+            mensagem += `*ITENS DO PEDIDO*%0A`;
+
+            carrinho.forEach((item, index) => {
+                mensagem += `----------------------------%0A`;
+                mensagem += `Item ${index + 1}%0A`;
+                mensagem += `Código: ${item.id}%0A`;
+                mensagem += `Nome: ${item.nome}%0A`;
+                mensagem += `Quantidade: ${item.quantidade}%0A`;
+                mensagem += `Valor: R$ ${(item.preco * item.quantidade).toFixed(2)}%0A`;
+            });
+
+            mensagem += `%0A----------------------------%0A`;
+            mensagem += `*TOTAL: R$ ${document.getElementById('total').textContent}*%0A%0A`;
+            mensagem += `Pedido pronto para confirmação!`;
+
+            const linkWhatsApp = `https://wa.me/5521980241228?text=${mensagem}`;
+            window.open(linkWhatsApp, '_blank');
+        }
+    </script>
+</body>
+</html>
