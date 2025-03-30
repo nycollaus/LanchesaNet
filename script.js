@@ -1,73 +1,58 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Smooth scrolling for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            
-            if (targetElement) {
-                // Close mobile menu if open
-                const mobileMenu = document.querySelector('.mobile-menu');
-                if (mobileMenu && mobileMenu.classList.contains('active')) {
-                    mobileMenu.classList.remove('active');
-                    document.querySelector('.menu-toggle').classList.remove('active');
-                }
-                
-                // Scroll to target
-                window.scrollTo({
-                    top: targetElement.offsetTop - 20,
-                    behavior: 'smooth'
-                });
-                
-                // Update URL without page jump
-                history.pushState(null, null, targetId);
-            }
-        });
-    });
-    
-    // Section switching
+    // Configuração inicial da seção ativa
     const navLinks = document.querySelectorAll('.sidebar-nav a');
     const sections = document.querySelectorAll('.section');
     
+    // Função para extrair o hash da URL
+    function getHashFromUrl() {
+        return window.location.hash.substring(1);
+    }
+    
+    // Função para mostrar a seção correta
+    function setActiveSection() {
+        const currentHash = getHashFromUrl();
+        let activeSection = 'about'; // Seção padrão
+        
+        // Verifica se o hash corresponde a uma seção existente
+        if (currentHash) {
+            const targetSection = document.getElementById(currentHash);
+            if (targetSection) {
+                activeSection = currentHash;
+            }
+        }
+        
+        // Atualiza o menu e a seção ativa
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${activeSection}`) {
+                link.classList.add('active');
+            }
+        });
+        
+        sections.forEach(section => {
+            section.classList.remove('active');
+            if (section.id === activeSection) {
+                section.classList.add('active');
+            }
+        });
+    }
+    
+    // Configura os listeners de clique para recarregar a página
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
+            const sectionId = this.getAttribute('href').substring(1);
             
-            // Remove active class from all links and sections
-            navLinks.forEach(navLink => navLink.classList.remove('active'));
-            sections.forEach(section => section.classList.remove('active'));
-            
-            // Add active class to clicked link
-            this.classList.add('active');
-            
-            // Show corresponding section
-            const target = this.getAttribute('href');
-            document.querySelector(target).classList.add('active');
-            
-            // Scroll to top of section
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+            // Atualiza a URL com o hash da seção e recarrega a página
+            window.location.hash = sectionId;
+            window.location.reload();
         });
     });
     
-    // Activate first section by default
-    if (window.location.hash) {
-        const hash = window.location.hash;
-        const targetLink = document.querySelector(`.sidebar-nav a[href="${hash}"]`);
-        if (targetLink) {
-            targetLink.click();
-        } else {
-            document.querySelector('.sidebar-nav a').click();
-        }
-    } else {
-        document.querySelector('.sidebar-nav a').click();
-    }
+    // Configura a seção ativa quando a página carrega
+    setActiveSection();
     
-    // Animate skill bars when section is visible
+    // Animação das barras de habilidades (opcional)
     const animateSkillBars = () => {
         const skillBars = document.querySelectorAll('.skill-bar span');
         skillBars.forEach(bar => {
@@ -79,29 +64,22 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     };
     
-    // Intersection Observer for animations
-    const observerOptions = {
-        threshold: 0.1
-    };
-    
+    // Observador para animar habilidades quando a seção for visível
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                if (entry.target.id === 'skills') {
-                    animateSkillBars();
-                }
-                
-                // Add any other section-specific animations here
+            if (entry.isIntersecting && entry.target.id === 'skills') {
+                animateSkillBars();
             }
         });
-    }, observerOptions);
+    }, { threshold: 0.1 });
     
-    // Observe all sections
-    sections.forEach(section => {
-        observer.observe(section);
-    });
+    // Observa a seção de habilidades
+    const skillsSection = document.getElementById('skills');
+    if (skillsSection) {
+        observer.observe(skillsSection);
+    }
     
-    // Mobile menu toggle (for responsive design)
+    // Menu mobile toggle (para responsividade)
     const menuToggle = document.createElement('div');
     menuToggle.className = 'menu-toggle';
     menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
@@ -112,10 +90,31 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('.sidebar').classList.toggle('mobile-active');
     });
     
-    // Add responsive styles dynamically
-    const responsiveStyles = document.createElement('style');
-    responsiveStyles.textContent = `
+    // Adiciona estilos para o menu mobile
+    const mobileStyles = document.createElement('style');
+    mobileStyles.textContent = `
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: var(--primary);
+            color: var(--dark);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
         @media (max-width: 992px) {
+            .menu-toggle {
+                display: flex;
+            }
+            
             .sidebar {
                 transform: translateX(-100%);
                 transition: transform 0.3s ease;
@@ -123,37 +122,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 top: 0;
                 left: 0;
                 height: 100vh;
-                z-index: 100;
-                overflow-y: auto;
+                z-index: 999;
             }
             
             .sidebar.mobile-active {
                 transform: translateX(0);
             }
-            
-            .menu-toggle {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                position: fixed;
-                top: 20px;
-                left: 20px;
-                width: 40px;
-                height: 40px;
-                background: var(--primary);
-                color: var(--dark);
-                border-radius: 50%;
-                z-index: 101;
-                cursor: pointer;
-                font-size: 1.2rem;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            }
-            
-            .menu-toggle.active {
-                background: var(--dark);
-                color: var(--primary);
-            }
         }
     `;
-    document.head.appendChild(responsiveStyles);
+    document.head.appendChild(mobileStyles);
 });
