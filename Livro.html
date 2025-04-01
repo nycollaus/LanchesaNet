@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca Digital - Open Library</title>
+    <style>
+        :root {
+            --primary-color: #4285f4;
+            --secondary-color: #34a853;
+            --accent-color: #ea4335;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --gray-color: #6c757d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+        
+        nav ul li a:hover {
+            opacity: 0.8;
+        }
+        
+        .search-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .search-box {
+            display: flex;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 30px;
+            overflow: hidden;
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .search-box button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .search-box button:hover {
+            background-color: #2d9248;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .section-title {
+            margin: 2rem 0 1rem;
+            font-size: 1.5rem;
+            color: var(--dark-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+        
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .book-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .book-cover {
+            height: 250px;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .book-cover img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .book-info {
+            padding: 1rem;
+        }
+        
+        .book-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .book-author {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .book-year {
+            color: var(--gray-color);
+            font-size: 0.8rem;
+        }
+        
+        .favorite-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255,255,255,0.8);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--gray-color);
+            transition: all 0.3s;
+        }
+        
+        .favorite-btn:hover {
+            color: var(--accent-color);
+        }
+        
+        .favorite-btn.active {
+            color: var(--accent-color);
+        }
+        
+        .book-detail {
+            display: none;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 20px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .book-detail.active {
+            display: block;
+        }
+        
+        .detail-header {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 2rem;
+        }
+        
+        @media (min-width: 768px) {
+            .detail-header {
+                flex-direction: row;
+            }
+        }
+        
+        .detail-cover {
+            flex: 0 0 250px;
+            margin-right: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .detail-cover img {
+            max-width: 100%;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        
+        .detail-info {
+            flex: 1;
+        }
+        
+        .detail-title {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+        
+        .detail-author {
+            font-size: 1.2rem;
+            color: var(--gray-color);
+            margin-bottom: 1rem;
+        }
+        
+        .detail-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .meta-item {
+            background-color: var(--light-color);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .detail-description {
+            margin: 1.5rem 0;
+            line-height: 1.7;
+        }
+        
+        .back-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 1rem;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .back-btn i {
+            margin-right: 5px;
+        }
+        
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(0,0,0,0.1);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            background-color: #fee;
+            color: var(--accent-color);
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .read-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 1rem;
+            display: inline-flex;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .read-btn i {
+            margin-right: 8px;
+        }
+        
+        .read-btn:hover {
+            background-color: #2d9248;
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+            }
+            
+            nav ul li {
+                margin-left: 1rem;
+                margin-right: 0;
+            }
+            
+            .books-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-book-open"></i>
+                <span>Biblioteca Digital</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" id="home-link">Início</a></li>
+                    <li><a href="#" id="favorites-link">Favoritos</a></li>
+                    <li><a href="https://openlibrary.org" target="_blank">Open Library</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="Pesquise por título, autor ou assunto...">
+            <button id="search-btn"><i class="fas fa-search"></i></button>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div id="home-page">
+            <h2 class="section-title">Livros Populares</h2>
+            <div id="featured-books" class="books-grid"></div>
+            
+            <h2 class="section-title">Lançamentos Recentes</h2>
+            <div id="new-releases" class="books-grid"></div>
+        </div>
+        
+        <div id="search-results" style="display: none;">
+            <button class="back-btn" id="back-from-search"><i class="fas fa-arrow-left"></i> Voltar</button>
+            <h2 class="section-title">Resultados da Pesquisa</h2>
+            <div id="results-container" class="books-grid"></div>
+            <div id="load-more-container" style="text-align: center; margin: 2rem 0;">
+                <button id="load-more-btn" style="display: none;">Carregar Mais</button>
+            </div>
+        </div>
+        
+        <div id="favorites-page" style="display: none;">
+            <button class="back-btn" id="back-from-favorites"><i class="fas fa-arrow-left"></i> Voltar</button>
+            <h2 class="section-title">Seus Livros Favoritos</h2>
+            <div id="favorites-container" class="books-grid"></div>
+            <div id="no-favorites" style="text-align: center; padding: 2rem; color: var(--gray-color);">
+                <i class="fas fa-heart-broken" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                <p>Você ainda não tem livros favoritos</p>
+            </div>
+        </div>
+        
+        <div id="book-detail" class="book-detail">
+            <button class="back-btn" id="back-from-detail"><i class="fas fa-arrow-left"></i> Voltar</button>
+            <div class="detail-header">
+                <div class="detail-cover">
+                    <img id="detail-cover" src="" alt="Capa do Livro">
+                </div>
+                <div class="detail-info">
+                    <h1 class="detail-title" id="detail-title"></h1>
+                    <p class="detail-author" id="detail-author"></p>
+                    <div class="detail-meta">
+                        <span class="meta-item" id="detail-published"></span>
+                        <span class="meta-item" id="detail-pages"></span>
+                        <span class="meta-item" id="detail-subjects"></span>
+                    </div>
+                    <button class="favorite-btn" id="detail-favorite-btn">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                    <button class="read-btn" id="read-book-btn">
+                        <i class="fas fa-book-open"></i> Ler Livro
+                    </button>
+                    <div class="detail-description" id="detail-description"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="loading" class="loading" style="display: none;">
+            <div class="spinner"></div>
+        </div>
+        
+        <div id="error-message" class="error-message" style="display: none;"></div>
+    </div>
+    
+    <footer>
+        <p>© 2023 Biblioteca Digital - Utilizando a API do Open Library</p>
+        <p>Dados fornecidos pela Open Library, um projeto da Internet Archive</p>
+    </footer>
+    
+    <script>
+        // Estado da aplicação
+        const state = {
+            currentPage: 'home',
+            currentSearchQuery: '',
+            currentSearchPage: 1,
+            currentBookId: null,
+            favorites: JSON.parse(localStorage.getItem('favorites')) || []
+        };
+        
+        // Elementos DOM
+        const elements = {
+            homePage: document.getElementById('home-page'),
+            searchResults: document.getElementById('search-results'),
+            favoritesPage: document.getElementById('favorites-page'),
+            bookDetail: document.getElementById('book-detail'),
+            featuredBooks: document.getElementById('featured-books'),
+            newReleases: document.getElementById('new-releases'),
+            resultsContainer: document.getElementById('results-container'),
+            favoritesContainer: document.getElementById('favorites-container'),
+            noFavorites: document.getElementById('no-favorites'),
+            searchInput: document.getElementById('search-input'),
+            searchBtn: document.getElementById('search-btn'),
+            loadMoreBtn: document.getElementById('load-more-btn'),
+            homeLink: document.getElementById('home-link'),
+            favoritesLink: document.getElementById('favorites-link'),
+            backFromSearch: document.getElementById('back-from-search'),
+            backFromFavorites: document.getElementById('back-from-favorites'),
+            backFromDetail: document.getElementById('back-from-detail'),
+            loading: document.getElementById('loading'),
+            errorMessage: document.getElementById('error-message'),
+            detailCover: document.getElementById('detail-cover'),
+            detailTitle: document.getElementById('detail-title'),
+            detailAuthor: document.getElementById('detail-author'),
+            detailPublished: document.getElementById('detail-published'),
+            detailPages: document.getElementById('detail-pages'),
+            detailSubjects: document.getElementById('detail-subjects'),
+            detailDescription: document.getElementById('detail-description'),
+            detailFavoriteBtn: document.getElementById('detail-favorite-btn'),
+            readBookBtn: document.getElementById('read-book-btn')
+        };
+        
+        // Event Listeners
+        elements.searchBtn.addEventListener('click', handleSearch);
+        elements.searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleSearch();
+        });
+        
+        elements.homeLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showHomePage();
+        });
+        
+        elements.favoritesLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showFavoritesPage();
+        });
+        
+        elements.backFromSearch.addEventListener('click', showHomePage);
+        elements.backFromFavorites.addEventListener('click', showHomePage);
+        elements.backFromDetail.addEventListener('click', () => {
+            if (state.currentPage === 'search') {
+                showSearchResults(state.currentSearchQuery);
+            } else if (state.currentPage === 'favorites') {
+                showFavoritesPage();
+            } else {
+                showHomePage();
+            }
+        });
+        
+        elements.loadMoreBtn.addEventListener('click', () => {
+            state.currentSearchPage++;
+            searchBooks(state.currentSearchQuery, state.currentSearchPage);
+        });
+        
+        elements.detailFavoriteBtn.addEventListener('click', toggleFavorite);
+        elements.readBookBtn.addEventListener('click', () => {
+            if (state.currentBookId) {
+                window.open(`https://openlibrary.org${state.currentBookId}`, '_blank');
+            }
+        });
+        
+        // Funções de navegação
+        function showHomePage() {
+            state.currentPage = 'home';
+            elements.homePage.style.display = 'block';
+            elements.searchResults.style.display = 'none';
+            elements.favoritesPage.style.display = 'none';
+            elements.bookDetail.classList.remove('active');
+            
+            // Carrega livros populares se ainda não carregados
+            if (elements.featuredBooks.innerHTML === '') {
+                loadFeaturedBooks();
+                loadNewReleases();
+            }
+        }
+        
+        function showSearchResults(query) {
+            state.currentPage = 'search';
+            state.currentSearchQuery = query;
+            state.currentSearchPage = 1;
+            
+            elements.homePage.style.display = 'none';
+            elements.searchResults.style.display = 'block';
+            elements.favoritesPage.style.display = 'none';
+            elements.bookDetail.classList.remove('active');
+            
+            elements.resultsContainer.innerHTML = '';
+            searchBooks(query, 1);
+        }
+        
+        function showFavoritesPage() {
+            state.currentPage = 'favorites';
+            
+            elements.homePage.style.display = 'none';
+            elements.searchResults.style.display = 'none';
+            elements.favoritesPage.style.display = 'block';
+            elements.bookDetail.classList.remove('active');
+            
+            renderFavorites();
+        }
+        
+        function showBookDetail(bookId) {
+            state.currentBookId = bookId;
+            elements.bookDetail.classList.add('active');
+            elements.homePage.style.display = 'none';
+            elements.searchResults.style.display = 'none';
+            elements.favoritesPage.style.display = 'none';
+            
+            loadBookDetails(bookId);
+        }
+        
+        // Funções de API
+        async function loadFeaturedBooks() {
+            try {
+                showLoading();
+                const response = await fetch('https://openlibrary.org/subjects/love.json?limit=12');
+                const data = await response.json();
+                
+                if (data.works && data.works.length > 0) {
+                    renderBooks(data.works, elements.featuredBooks);
+                } else {
+                    showError('Não foi possível carregar os livros populares.');
+                }
+            } catch (error) {
+                showError('Erro ao carregar livros populares: ' + error.message);
+            } finally {
+                hideLoading();
+            }
+        }
+        
+        async function loadNewReleases() {
+            try {
+                showLoading();
+                // Usamos a API de busca com ordenação por data de publicação mais recente
+                const response = await fetch('https://openlibrary.org/search.json?sort=new&limit=12');
+                const data = await response.json();
+                
+                if (data.docs && data.docs.length > 0) {
+                    // Transformamos os resultados em um formato consistente com outras chamadas
+                    const works = data.docs.map(doc => ({
+                        key: doc.key,
+                        title: doc.title,
+                        authors: doc.author_name ? doc.author_name.map(name => ({ name })) : [],
+                        first_publish_year: doc.first_publish_year,
+                        cover_id: doc.cover_i
+                    }));
+                    
+                    renderBooks(works, elements.newReleases);
+                } else {
+                    showError('Não foi possível carregar os lançamentos recentes.');
+                }
+            } catch (error) {
+                showError('Erro ao carregar lançamentos recentes: ' + error.message);
+            } finally {
+                hideLoading();
+            }
+        }
+        
+        async function searchBooks(query, page = 1) {
+            try {
+                showLoading();
+                const response = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&page=${page}`);
+                const data = await response.json();
+                
+                if (data.docs && data.docs.length > 0) {
+                    // Transformamos os resultados em um formato consistente
+                    const works = data.docs.map(doc => ({
+                        key: doc.key,
+                        title: doc.title,
+                        authors: doc.author_name ? doc.author_name.map(name => ({ name })) : [],
+                        first_publish_year: doc.first_publish_year,
+                        cover_id: doc.cover_i
+                    }));
+                    
+                    if (page === 1) {
+                        elements.resultsContainer.innerHTML = '';
+                    }
+                    
+                    renderBooks(works, elements.resultsContainer);
+                    
+                    // Mostra o botão "Carregar Mais" se houver mais resultados
+                    if (data.numFound > page * 100) {
+                        elements.loadMoreBtn.style.display = 'inline-block';
+                    } else {
+                        elements.loadMoreBtn.style.display = 'none';
+                    }
+                } else {
+                    showError('Nenhum resultado encontrado para "' + query + '"');
+                }
+            } catch (error) {
+                showError('Erro na pesquisa: ' + error.message);
+            } finally {
+                hideLoading();
+            }
+        }
+        
+        async function loadBookDetails(bookId) {
+            try {
+                showLoading();
+                
+                // Primeira chamada para obter informações básicas
+                const bookResponse = await fetch(`https://openlibrary.org${bookId}.json`);
+                const bookData = await bookResponse.json();
+                
+                // Segunda chamada para obter informações de capa e edição
+                const editionResponse = await fetch(`https://openlibrary.org${bookId}/editions.json`);
+                const editionData = await editionResponse.json();
+                
+                // Terceira chamada para obter descrição (pode estar em work ou edition)
+                let description = 'Descrição não disponível';
+                if (bookData.description) {
+                    description = typeof bookData.description === 'string' 
+                        ? bookData.description 
+                        : bookData.description.value || 'Descrição não disponível';
+                }
+                
+                // Processa autores
+                let authors = 'Autor desconhecido';
+                if (bookData.authors && bookData.authors.length > 0) {
+                    // Se temos apenas IDs de autores, buscamos os nomes
+                    if (typeof bookData.authors[0].author === 'object') {
+                        const authorPromises = bookData.authors.map(async author => {
+                            const authorResponse = await fetch(`https://openlibrary.org${author.author.key}.json`);
+                            const authorData = await authorResponse.json();
+                            return authorData.name;
+                        });
+                        authors = (await Promise.all(authorPromises)).join(', ');
+                    } else if (bookData.authors[0].name) {
+                        authors = bookData.authors.map(a => a.name).join(', ');
+                    }
+                }
+                
+                // Processa capa do livro
+                let coverUrl = 'https://via.placeholder.com/250x350?text=Sem+Capa';
+                if (editionData.entries && editionData.entries.length > 0) {
+                    const firstEdition = editionData.entries[0];
+                    if (firstEdition.covers && firstEdition.covers.length > 0) {
+                        coverUrl = `https://covers.openlibrary.org/b/id/${firstEdition.covers[0]}-L.jpg`;
+                    }
+                }
+                
+                // Processa informações adicionais
+                const published = bookData.first_publish_date || 
+                                 (editionData.entries && editionData.entries[0] && editionData.entries[0].publish_date) || 
+                                 'Data desconhecida';
+                
+                const pages = (editionData.entries && editionData.entries[0] && editionData.entries[0].number_of_pages) 
+                            ? `${editionData.entries[0].number_of_pages} páginas` 
+                            : '';
+                
+                const subjects = bookData.subjects ? bookData.subjects.slice(0, 3).join(', ') : '';
+                
+                // Atualiza a UI
+                elements.detailCover.src = coverUrl;
+                elements.detailTitle.textContent = bookData.title || 'Título desconhecido';
+                elements.detailAuthor.textContent = authors;
+                elements.detailPublished.textContent = published;
+                elements.detailPages.textContent = pages;
+                elements.detailSubjects.textContent = subjects;
+                elements.detailDescription.innerHTML = description.replace(/\n/g, '<br>');
+                
+                // Atualiza o botão de favorito
+                updateFavoriteButton(bookId);
+                
+            } catch (error) {
+                showError('Erro ao carregar detalhes do livro: ' + error.message);
+            } finally {
+                hideLoading();
+            }
+        }
+        
+        // Funções de renderização
+        function renderBooks(books, container) {
+            books.forEach(book => {
+                const bookId = book.key || `/works/${book.cover_id}`; // Fallback para IDs
+                const bookCard = document.createElement('div');
+                bookCard.className = 'book-card';
+                bookCard.addEventListener('click', () => showBookDetail(bookId));
+                
+                const coverId = book.cover_id || (book.covers && book.covers[0]);
+                const coverUrl = coverId 
+                    ? `https://covers.openlibrary.org/b/id/${coverId}-M.jpg` 
+                    : 'https://via.placeholder.com/200x300?text=Sem+Capa';
+                
+                const title = book.title || 'Título desconhecido';
+                const author = book.authors && book.authors.length > 0 
+                    ? book.authors[0].name 
+                    : 'Autor desconhecido';
+                const year = book.first_publish_year || '';
+                
+                bookCard.innerHTML = `
+                    <div class="book-cover">
+                        <img src="${coverUrl}" alt="${title}">
+                        <button class="favorite-btn ${state.favorites.includes(bookId) ? 'active' : ''}" 
+                                data-book-id="${bookId}">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">${title}</h3>
+                        <p class="book-author">${author}</p>
+                        <p class="book-year">${year}</p>
+                    </div>
+                `;
+                
+                container.appendChild(bookCard);
+                
+                // Adiciona evento ao botão de favorito para evitar propagação do clique
+                const favoriteBtn = bookCard.querySelector('.favorite-btn');
+                favoriteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    toggleFavorite(bookId);
+                    favoriteBtn.classList.toggle('active');
+                });
+            });
+        }
+        
+        function renderFavorites() {
+            if (state.favorites.length === 0) {
+                elements.noFavorites.style.display = 'block';
+                elements.favoritesContainer.style.display = 'none';
+                return;
+            }
+            
+            elements.noFavorites.style.display = 'none';
+            elements.favoritesContainer.style.display = 'grid';
+            elements.favoritesContainer.innerHTML = '';
+            
+            state.favorites.forEach(async bookId => {
+                try {
+                    const response = await fetch(`https://openlibrary.org${bookId}.json`);
+                    const bookData = await response.json();
+                    
+                    // Para simplificar, usamos apenas os dados básicos
+                    const bookCard = document.createElement('div');
+                    bookCard.className = 'book-card';
+                    bookCard.addEventListener('click', () => showBookDetail(bookId));
+                    
+                    // Tenta obter a capa da edição
+                    let coverUrl = 'https://via.placeholder.com/200x300?text=Sem+Capa';
+                    const editionResponse = await fetch(`https://openlibrary.org${bookId}/editions.json`);
+                    const editionData = await editionResponse.json();
+                    
+                    if (editionData.entries && editionData.entries.length > 0 && editionData.entries[0].covers) {
+                        coverUrl = `https://covers.openlibrary.org/b/id/${editionData.entries[0].covers[0]}-M.jpg`;
+                    }
+                    
+                    bookCard.innerHTML = `
+                        <div class="book-cover">
+                            <img src="${coverUrl}" alt="${bookData.title}">
+                            <button class="favorite-btn active" data-book-id="${bookId}">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                        <div class="book-info">
+                            <h3 class="book-title">${bookData.title || 'Título desconhecido'}</h3>
+                            <p class="book-year">${bookData.first_publish_date || ''}</p>
+                        </div>
+                    `;
+                    
+                    elements.favoritesContainer.appendChild(bookCard);
+                    
+                    // Adiciona evento ao botão de favorito
+                    const favoriteBtn = bookCard.querySelector('.favorite-btn');
+                    favoriteBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        toggleFavorite(bookId);
+                        renderFavorites(); // Recarrega a lista
+                    });
+                    
+                } catch (error) {
+                    console.error('Erro ao carregar favorito:', error);
+                }
+            });
+        }
+        
+        // Funções de favoritos
+        function toggleFavorite(bookId) {
+            const index = state.favorites.indexOf(bookId);
+            if (index === -1) {
+                state.favorites.push(bookId);
+            } else {
+                state.favorites.splice(index, 1);
+            }
+            
+            // Atualiza o localStorage
+            localStorage.setItem('favorites', JSON.stringify(state.favorites));
+            
+            // Atualiza o botão de favorito na página de detalhes se for o livro atual
+            if (state.currentBookId === bookId) {
+                updateFavoriteButton(bookId);
+            }
+        }
+        
+        function updateFavoriteButton(bookId) {
+            const isFavorite = state.favorites.includes(bookId);
+            elements.detailFavoriteBtn.className = `favorite-btn ${isFavorite ? 'active' : ''}`;
+            elements.detailFavoriteBtn.innerHTML = `<i class="fas fa-heart"></i> ${isFavorite ? 'Remover dos' : 'Adicionar aos'} Favoritos`;
+        }
+        
+        // Funções auxiliares
+        function handleSearch() {
+            const query = elements.searchInput.value.trim();
+            if (query) {
+                showSearchResults(query);
+            }
+        }
+        
+        function showLoading() {
+            elements.loading.style.display = 'flex';
+            elements.errorMessage.style.display = 'none';
+        }
+        
+        function hideLoading() {
+            elements.loading.style.display = 'none';
+        }
+        
+        function showError(message) {
+            elements.errorMessage.textContent = message;
+            elements.errorMessage.style.display = 'block';
+        }
+        
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            showHomePage();
+        });
+    </script>
+</body>
+</html>
