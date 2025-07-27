@@ -102,8 +102,8 @@
         }
 
         .section {
-            min-height: 100vh;
-            padding: 100px 2rem 50px;
+            min-height: calc(100vh - 100px);
+            padding: 80px 2rem 40px;
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -112,8 +112,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            min-height: 100vh;
-            gap: 4rem;
+            min-height: calc(100vh - 100px);
+            gap: 2rem;
         }
 
         .hero-content {
@@ -121,7 +121,7 @@
         }
 
         .hero h1 {
-            font-size: 4rem;
+            font-size: 3.5rem;
             margin-bottom: 1rem;
             background: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00);
             -webkit-background-clip: text;
@@ -135,8 +135,8 @@
         }
 
         .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
             line-height: 1.6;
             opacity: 0.9;
         }
@@ -144,10 +144,10 @@
         .cta-button {
             background: linear-gradient(45deg, #00ffff, #ff00ff);
             border: none;
-            padding: 15px 30px;
+            padding: 12px 25px;
             border-radius: 50px;
             color: white;
-            font-size: 1.1rem;
+            font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
@@ -167,8 +167,8 @@
         }
 
         .game-controller {
-            width: 300px;
-            height: 200px;
+            width: 250px;
+            height: 150px;
             background: linear-gradient(145deg, #2a2a3a, #1a1a2a);
             border-radius: 30px;
             position: relative;
@@ -183,8 +183,8 @@
 
         .controller-button {
             position: absolute;
-            width: 25px;
-            height: 25px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             background: linear-gradient(45deg, #00ffff, #ff00ff);
             animation: pulse 2s ease-in-out infinite;
@@ -195,18 +195,18 @@
             50% { transform: scale(1.1); }
         }
 
-        .btn-a { top: 40px; right: 60px; }
-        .btn-b { top: 60px; right: 40px; }
-        .btn-x { top: 60px; right: 80px; }
-        .btn-y { top: 20px; right: 40px; }
+        .btn-a { top: 30px; right: 50px; }
+        .btn-b { top: 50px; right: 30px; }
+        .btn-x { top: 50px; right: 70px; }
+        .btn-y { top: 10px; right: 30px; }
 
         .d-pad {
             position: absolute;
-            left: 60px;
+            left: 50px;
             top: 50%;
             transform: translateY(-50%);
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
         }
 
         .d-pad::before,
@@ -217,21 +217,21 @@
         }
 
         .d-pad::before {
-            width: 60px;
-            height: 20px;
-            top: 20px;
+            width: 50px;
+            height: 15px;
+            top: 17px;
         }
 
         .d-pad::after {
-            width: 20px;
-            height: 60px;
-            left: 20px;
+            width: 15px;
+            height: 50px;
+            left: 17px;
         }
 
         .section-title {
-            font-size: 3rem;
+            font-size: 2.5rem;
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             background: linear-gradient(45deg, #00ffff, #ff00ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -239,15 +239,15 @@
 
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
 
         .project-card {
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 2rem;
+            border-radius: 15px;
+            padding: 1.5rem;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
@@ -278,75 +278,71 @@
 
         .project-image {
             width: 100%;
-            height: 200px;
-            border-radius: 15px;
+            height: 180px;
+            border-radius: 10px;
             margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: #00ffff;
             object-fit: cover;
         }
 
         .project-title {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
             color: #00ffff;
         }
 
         .project-description {
-            margin-bottom: 1rem;
-            line-height: 1.6;
+            margin-bottom: 0.8rem;
+            line-height: 1.5;
             opacity: 0.9;
+            font-size: 0.9rem;
         }
 
         .tech-stack {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
 
         .tech-tag {
             background: rgba(0, 255, 255, 0.2);
             padding: 0.3rem 0.8rem;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             border: 1px solid rgba(0, 255, 255, 0.3);
         }
 
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
 
         .skill-category {
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 2rem;
+            border-radius: 15px;
+            padding: 1.5rem;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .skill-category h3 {
             color: #ff00ff;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
         }
 
         .skill-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
 
         .skill-bar {
             width: 60%;
-            height: 8px;
+            height: 6px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
             overflow: hidden;
@@ -360,17 +356,17 @@
         }
 
         .contact-form {
-            max-width: 600px;
+            max-width: 500px;
             margin: 0 auto;
             background: rgba(255, 255, 255, 0.05);
-            padding: 3rem;
-            border-radius: 20px;
+            padding: 2rem;
+            border-radius: 15px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .form-group {
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .form-group label {
@@ -382,12 +378,12 @@
         .form-group input,
         .form-group textarea {
             width: 100%;
-            padding: 1rem;
+            padding: 0.8rem;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
+            border-radius: 8px;
             color: white;
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
 
         .form-group input:focus,
@@ -400,13 +396,13 @@
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 2rem;
-            margin-top: 3rem;
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
 
         .social-link {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             background: linear-gradient(45deg, #00ffff, #ff00ff);
             border-radius: 50%;
             display: flex;
@@ -414,7 +410,7 @@
             justify-content: center;
             text-decoration: none;
             color: white;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             transition: all 0.3s ease;
         }
 
@@ -431,23 +427,24 @@
             .nav-links {
                 display: none;
             }
-            
+
             .mobile-menu {
                 display: block;
                 color: white;
                 font-size: 1.5rem;
                 cursor: pointer;
             }
-            
+
             .hero {
                 flex-direction: column;
                 text-align: center;
+                gap: 1.5rem;
             }
-            
+
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 2rem;
             }
-            
+
             .projects-grid,
             .skills-grid {
                 grid-template-columns: 1fr;
@@ -467,7 +464,7 @@
         .scroll-progress {
             height: 100%;
             background: linear-gradient(45deg, #00ffff, #ff00ff);
-            width: 0%;
+            width: 0;
             transition: width 0.1s ease;
         }
     </style>
@@ -502,7 +499,7 @@
             <div class="hero-content">
                 <h1>Nycollas Nunes Custódio</h1>
                 <p>Game Developer com 2+ anos de experiência, especializado em Unity, arte de som e efeitos visuais. Programador full-stack (HTML, CSS, JavaScript, SQL, C#) há 1 ano, desenvolvendo soluções eficientes para pequenas e médias empresas.</p>
-                <a href="#projects" class="cta-button" onclick="smoothScroll('#projects')">Explorar Projetos</a>
+                <a href="#projects" class="cta-button" onclick="smoothScroll(event, '#projects')">Explorar Projetos</a>
             </div>
             <div class="hero-visual">
                 <div class="game-controller">
@@ -519,15 +516,13 @@
     <!-- About Section -->
     <section id="about" class="section">
         <h2 class="section-title">Sobre Mim</h2>
-        <div style="text-align: center; max-width: 800px; margin: 0 auto; font-size: 1.2rem; line-height: 1.8;">
+        <div style="text-align: center; max-width: 700px; margin: 0 auto; font-size: 1.1rem; line-height: 1.6;">
             <p>Game Developer com 2+ anos de experiência especializado em Unity, arte de som e efeitos visuais. Como programador full-stack há 1 ano, desenvolvo soluções eficientes para pequenas e médias empresas utilizando HTML, CSS, JavaScript, SQL e C#.</p>
-            <br>
             <p>Formado pelo Get Municipal Monteiro Lobato (2013-2024) e atualmente cursando no Instituto Federal de Educação, Ciência e Tecnologia do Rio Grande do Sul. Domínio avançado em Visual Studio e VS Code, com expertise em projetos desde simples até complexos.</p>
         </div>
     </section>
 
     <!-- Projects Section -->
-    <div>
     <section id="projects" class="section">
         <h2 class="section-title">Projetos em Destaque</h2>
         <div class="projects-grid">
@@ -543,7 +538,6 @@
                 </div>
                 <p><strong>Status:</strong> Concluído | <strong>Especialidade:</strong> Desenvolvimento Web</p>
             </div>
-
             <div class="project-card" onclick="navigateToProject('jogo.html')">
                 <img class="project-image" src="Project2.jpg" alt="Tower Defense Game">
                 <h3 class="project-title">Tower Defense Game</h3>
@@ -556,7 +550,9 @@
                 </div>
                 <p><strong>Status:</strong> Concluído | <strong>Especialidade:</strong> Desenvolvimento de Jogos</p>
             </div>
-</div>
+        </div>
+    </section>
+
     <!-- Skills Section -->
     <section id="skills" class="section">
         <h2 class="section-title">Habilidades Técnicas</h2>
@@ -584,7 +580,6 @@
                     <div class="skill-bar"><div class="skill-progress" style="width: 75%"></div></div>
                 </div>
             </div>
-
             <div class="skill-category">
                 <h3>Game Development</h3>
                 <div class="skill-item">
@@ -608,7 +603,6 @@
                     <div class="skill-bar"><div class="skill-progress" style="width: 75%"></div></div>
                 </div>
             </div>
-
             <div class="skill-category">
                 <h3>Ferramentas de Desenvolvimento</h3>
                 <div class="skill-item">
@@ -628,7 +622,6 @@
                     <div class="skill-bar"><div class="skill-progress" style="width: 75%"></div></div>
                 </div>
             </div>
-
             <div class="skill-category">
                 <h3>Conhecimentos Acadêmicos</h3>
                 <div class="skill-item">
@@ -671,7 +664,6 @@
                 <button type="submit" class="cta-button" style="width: 100%;">Enviar Mensagem</button>
             </form>
         </div>
-
         <div class="social-links">
             <a href="mailto:nycollasnss@gmail.com" class="social-link" title="Email">✉️</a>
             <a href="tel:+5521980241228" class="social-link" title="WhatsApp">(21) 98024-1228</a>
@@ -682,11 +674,15 @@
     </section>
 
     <script>
+        // State management for navigation
+        let currentPage = 'index.html';
+        
         // Particles Animation
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
-            const particleCount = 50;
-
+            const particleCount = window.innerWidth > 768 ? 50 : 25; // Reduce particles on mobile
+            particlesContainer.innerHTML = '';
+            
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
@@ -703,23 +699,41 @@
         // Scroll Progress
         function updateScrollProgress() {
             const scrollTop = window.pageYOffset;
-            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
             const scrollPercent = (scrollTop / docHeight) * 100;
             document.getElementById('scrollProgress').style.width = scrollPercent + '%';
         }
 
         // Smooth Scroll
-        function smoothScroll(target) {
+        function smoothScroll(event, target) {
+            event.preventDefault();
             document.querySelector(target).scrollIntoView({
                 behavior: 'smooth'
             });
+            window.history.pushState({ page: 'index.html' }, '', '#home');
         }
 
-        // Navigate to Project
+        // Navigate to Project with return capability
         function navigateToProject(url) {
-            window.history.pushState({}, '', url);
+            window.history.pushState({ page: url }, '', url);
             window.location.href = url;
         }
+
+        // Handle browser back/forward navigation
+        window.addEventListener('popstate', function(event) {
+            if (event.state && event.state.page) {
+                if (event.state.page === 'index.html') {
+                    // Already on main page, scroll to home
+                    smoothScroll({ preventDefault: () => {} }, '#home');
+                } else {
+                    // Navigate to project page
+                    window.location.href = event.state.page;
+                }
+            } else {
+                // Default to home
+                smoothScroll({ preventDefault: () => {} }, '#home');
+            }
+        });
 
         // Navbar scroll effect
         function handleNavbarScroll() {
@@ -734,8 +748,6 @@
         // Form submission
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            // Simulate form submission
             const button = e.target.querySelector('button');
             const originalText = button.textContent;
             button.textContent = 'Enviando...';
@@ -744,7 +756,6 @@
             setTimeout(() => {
                 button.textContent = 'Mensagem Enviada! ✓';
                 button.style.background = 'linear-gradient(45deg, #00ff00, #008800)';
-                
                 setTimeout(() => {
                     button.textContent = originalText;
                     button.disabled = false;
@@ -759,7 +770,7 @@
             link.addEventListener('click', function(e) {
                 e.preventDefault();
                 const target = this.getAttribute('href');
-                smoothScroll(target);
+                smoothScroll(e, target);
             });
         });
 
@@ -776,8 +787,8 @@
                         }, 200);
                     }
                 });
-            });
-
+            }, { threshold: 0.1 });
+            
             skillBars.forEach(bar => observer.observe(bar));
         }
 
@@ -788,26 +799,10 @@
                 card.addEventListener('mouseenter', function() {
                     this.style.transform = 'translateY(-15px) rotateX(5deg)';
                 });
-                
                 card.addEventListener('mouseleave', function() {
                     this.style.transform = 'translateY(0) rotateX(0deg)';
                 });
             });
-        }
-
-        // Typing effect for hero text
-        function typeWriter(element, text, speed = 50) {
-            let i = 0;
-            element.innerHTML = '';
-            
-            function type() {
-                if (i < text.length) {
-                    element.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                }
-            }
-            type();
         }
 
         // Mobile menu toggle
@@ -823,28 +818,26 @@
                 navLinks.style.left = '0';
                 navLinks.style.width = '100%';
                 navLinks.style.background = 'rgba(0, 0, 0, 0.95)';
-                navLinks.style.padding = '2rem';
+                navLinks.style.padding = '1rem';
+                navLinks.style.gap = '1rem';
             }
         });
 
         // Easter egg - Konami Code
         let konamiCode = [];
         const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'];
-        
+
         document.addEventListener('keydown', function(e) {
             konamiCode.push(e.code);
             if (konamiCode.length > konamiSequence.length) {
                 konamiCode.shift();
             }
-            
             if (JSON.stringify(konamiCode) === JSON.stringify(konamiSequence)) {
-                // Easter egg activated
                 document.body.style.filter = 'hue-rotate(180deg)';
                 setTimeout(() => {
                     document.body.style.filter = 'none';
                 }, 3000);
                 
-                // Show secret message
                 const message = document.createElement('div');
                 message.innerHTML = '🎮 EASTER EGG ATIVADO! Você encontrou o código secreto! 🎮';
                 message.style.cssText = `
@@ -853,19 +846,17 @@
                     left: 50%;
                     transform: translate(-50%, -50%);
                     background: linear-gradient(45deg, #ff00ff, #00ffff);
-                    padding: 2rem;
-                    border-radius: 20px;
+                    padding: 1.5rem;
+                    border-radius: 15px;
                     z-index: 9999;
-                    font-size: 1.5rem;
+                    font-size: 1.2rem;
                     text-align: center;
                     animation: bounce 0.5s ease-in-out;
                 `;
                 document.body.appendChild(message);
-                
                 setTimeout(() => {
                     message.remove();
                 }, 3000);
-                
                 konamiCode = [];
             }
         });
@@ -875,9 +866,7 @@
             const scrolled = window.pageYOffset;
             const parallax = document.querySelector('.hero-visual');
             if (parallax) {
-                const speed
-
- = scrolled * 0.5;
+                const speed = scrolled * 0.3;
                 parallax.style.transform = `translateY(${speed}px)`;
             }
         }
@@ -886,7 +875,7 @@
         function checkPerformance() {
             if (window.performance && window.performance.memory) {
                 const memory = window.performance.memory;
-                if (memory.usedJSHeapSize > 50000000) { // 50MB
+                if (memory.usedJSHeapSize > 50000000) {
                     console.warn('High memory usage detected');
                 }
             }
@@ -908,6 +897,9 @@
                 }
             `;
             document.head.appendChild(style);
+            
+            // Initial history state
+            window.history.replaceState({ page: 'index.html' }, '', 'index.html');
         });
 
         // Event listeners
@@ -918,7 +910,6 @@
         });
 
         window.addEventListener('resize', function() {
-            // Recreate particles on resize
             document.getElementById('particles').innerHTML = '';
             createParticles();
         });
@@ -929,7 +920,6 @@
         // Add some interactive sound effects (visual feedback)
         document.querySelectorAll('.cta-button, .project-card, .social-link').forEach(element => {
             element.addEventListener('click', function() {
-                // Visual feedback for clicks
                 this.style.transform = 'scale(0.95)';
                 setTimeout(() => {
                     this.style.transform = '';
@@ -942,7 +932,6 @@
         window.addEventListener('scroll', function() {
             const currentScrollTop = window.pageYOffset;
             const navLinks = document.querySelector('.nav-links');
-            
             if (window.innerWidth <= 768 && navLinks.style.display === 'flex') {
                 if (currentScrollTop > lastScrollTop) {
                     navLinks.style.display = 'none';
