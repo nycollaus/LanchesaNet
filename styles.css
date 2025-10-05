@@ -27,51 +27,6 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-}
-
-#auth-section {
-    text-align: center;
-}
-
-#auth-form {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    max-width: 400px;
-    margin: 0 auto;
-}
-
-#auth-form input {
-    padding: 12px;
-    border: 1px solid #00ffff;
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 0.05);
-    color: #fff;
-    font-family: inherit;
-    font-size: 1em;
-}
-
-#auth-form button {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid #00ffff;
-    color: #fff;
-    padding: 10px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.3s;
-    font-family: inherit;
-}
-
-#auth-form button:hover {
-    background: rgba(0, 255, 255, 0.2);
-    box-shadow: 0 0 10px #00ffff;
-}
-
-.error {
-    color: #ff4d4d;
-    font-size: 0.9em;
-    margin-top: 10px;
 }
 
 header {
@@ -179,7 +134,6 @@ footer {
     footer { flex-direction: column; }
     #message-input { border-radius: 20px; margin-bottom: 10px; }
     #send-button { border-radius: 20px; }
-    #auth-form { max-width: 100%; }
 }
 
 body::before {

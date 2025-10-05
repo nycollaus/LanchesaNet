@@ -49,34 +49,18 @@
 </head>
 <body>
     <div class="container">
-        <div id="auth-section">
+        <header>
             <h1>🌌 Chat Cósmico</h1>
-            <div id="auth-form">
-                <input type="email" id="email" placeholder="E-mail estelar" required>
-                <input type="password" id="password" placeholder="Senha cósmica" required>
-                <button id="login-btn">Entrar</button>
-                <button id="register-btn">Registrar</button>
-                <button id="logout-btn" style="display: none;">Sair</button>
-                <p id="auth-error" class="error"></p>
-            </div>
-        </div>
-        <div id="chat-section" style="display: none;">
-            <header>
-                <h1>🌌 Chat Cósmico</h1>
-                <p id="user-count">Usuários online: 0</p>
-                <button id="clear-chat">🧹 Limpar Cosmos</button>
-            </header>
-            <div id="chat-messages" class="messages"></div>
-            <footer>
-                <input type="text" id="message-input" placeholder="Digite sua mensagem estelar... 🚀" maxlength="200">
-                <button id="send-button">Enviar</button>
-            </footer>
-        </div>
+            <p id="user-count">Usuários online: 0</p>
+            <button id="clear-chat">🧹 Limpar Cosmos</button>
+        </header>
+        <div id="chat-messages" class="messages"></div>
+        <footer>
+            <input type="text" id="message-input" placeholder="Digite sua mensagem estelar... 🚀" maxlength="200">
+            <button id="send-button">Enviar</button>
+        </footer>
     </div>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js"></script>
-    <script src="firebase.js"></script>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
