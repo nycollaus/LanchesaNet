@@ -1,0 +1,209 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Orbitron', monospace;
+    background: linear-gradient(135deg, #0c0c0c, #1a1a2e, #16213e, #0f0f23);
+    background-size: 400% 400%;
+    animation: galaxyShift 20s ease infinite;
+    color: #fff;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+@keyframes galaxyShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#auth-section {
+    text-align: center;
+}
+
+#auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+#auth-form input {
+    padding: 12px;
+    border: 1px solid #00ffff;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    font-family: inherit;
+    font-size: 1em;
+}
+
+#auth-form button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #00ffff;
+    color: #fff;
+    padding: 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: inherit;
+}
+
+#auth-form button:hover {
+    background: rgba(0, 255, 255, 0.2);
+    box-shadow: 0 0 10px #00ffff;
+}
+
+.error {
+    color: #ff4d4d;
+    font-size: 0.9em;
+    margin-top: 10px;
+}
+
+header {
+    text-align: center;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px #00ffff;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px #00ffff; }
+    to { text-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff; }
+}
+
+#user-count {
+    font-size: 1.1em;
+    color: #00ff00;
+    margin-bottom: 10px;
+}
+
+button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #00ffff;
+    color: #fff;
+    padding: 8px 16px;
+    margin: 0 5px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: inherit;
+}
+
+button:hover {
+    background: rgba(0, 255, 255, 0.2);
+    box-shadow: 0 0 10px #00ffff;
+}
+
+.messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.message {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 15px;
+    margin: 0 10px;
+    max-width: 70%;
+    align-self: flex-start;
+    animation: floatIn 0.5s ease-out;
+    border-left: 3px solid #00ffff;
+    box-shadow: 0 4px 15px rgba(0, 255, 255, 0.1);
+}
+
+@keyframes floatIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.message strong {
+    color: #00ff00;
+    font-size: 0.9em;
+}
+
+footer {
+    display: flex;
+    padding: 20px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#message-input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #00ffff;
+    border-radius: 20px 0 0 20px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    font-family: inherit;
+}
+
+#send-button {
+    border-radius: 0 20px 20px 0;
+}
+
+@media (max-width: 600px) {
+    .container { padding: 10px; }
+    header h1 { font-size: 2em; }
+    .message { max-width: 90%; }
+    footer { flex-direction: column; }
+    #message-input { border-radius: 20px; margin-bottom: 10px; }
+    #send-button { border-radius: 20px; }
+    #auth-form { max-width: 100%; }
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(2px 2px at 160px 30px, #ddd, transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: twinkle 3s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes twinkle {
+    from { opacity: 0.5; }
+    50% { opacity: 1; }
+    to { opacity: 0.5; }
+}
